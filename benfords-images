@@ -1,0 +1,14 @@
+library(imagerExtra)
+library(imager)
+library(benford.analysis)
+library(imagerExtra)
+library(dplyr)
+
+im = load.image("C:/save4.jpg") %>% grayscale()
+
+im_df = DCT2D(im) %>% as.data.frame()
+
+bfd.im = benford(im_df$value, number.of.digits = 1, discrete = T, round = 1, sign = "both") 
+bfd.im
+
+plot(bfd.im)
