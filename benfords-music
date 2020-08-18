@@ -1,0 +1,21 @@
+# load packages
+library(dplyr)
+library(tuneR)
+library(benford.analysis)
+
+# read mp3 and convert to wave
+r = readMP3("J_Syreus_Bach_-_Lesser_Faith.mp3")  
+writeWave(r,"tmp.wav",extensible=FALSE)
+
+# read wave
+w = readWave("tmp.wav")
+
+# take left data, perform fft and Mod
+data = w@left %>% fft() %>% Mod()
+
+# perform benford analysis
+trends = benford(data, number.of.digits = 1, discrete = T, sign = "both") 
+trends
+
+# plot results
+plot(trends)
